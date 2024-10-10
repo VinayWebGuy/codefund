@@ -138,6 +138,9 @@ class ApiController extends Controller
         $token_key = $req->header('token_key');
         $auth_key = $req->header('auth_key');
         $api = Api::where('key', $token_key)->first();
+        if(!$api) {
+            return response()->json(['success' => false, 'code' => 401, 'message' => 'Invalid api!']);
+        }
         $user = User::find($api->user_id);
       
           // Check user auth_key and auth_key_expiry
@@ -148,9 +151,7 @@ class ApiController extends Controller
             return response()->json(['success' => false, 'code' => 403, 'message' => 'Invalid API or User is not authenticated!']);
         }
 
-        if(!$api) {
-            return response()->json(['success' => false, 'code' => 401, 'message' => 'Invalid api!']);
-        }
+      
         if ($user->auth_key_expiry <= now()) {
             return response()->json(['success' => false, 'code' => 403, 'message' => 'User is not authenticated!']);
         }

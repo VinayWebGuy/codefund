@@ -58,7 +58,7 @@ As a User, you can:
 2. **Add Funds:** Add funds to your wallet using the `ref_id`, `amount`, and `secret_code` provided by the Admin.
 3. **Transfer Funds:** Send funds to other user accounts.
 4. **Generate Payment Links:** Create payment links by specifying an amount and account number, which you can share with others. You can also view and pay existing payment links in the "Payment Link > All Links" section.
-5. **Manage API Access:** Create APIs with options to limit requests (up to 25,000 per minute or unlimited) and add an additional security header with `secure_header` keys. Track all created APIs and manage permissions for specific tasks.
+5. **Manage API Access:** Create APIs with options to limit requests (up to 25,000 or unlimited) and add an additional security header with `secure_header` keys. Track all created APIs and manage permissions for specific tasks.
 6. **View Profile:** Access and update your profile details.
 7. **Logout:** End your session securely.
 

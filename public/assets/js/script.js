@@ -93,3 +93,49 @@ function generateId(what, length) {
       return result
     };
   }
+
+
+
+  let currentQrValue;
+
+  $('.showQr').click(function() {
+      currentQrValue = $(this).data('link');
+      const qrImg = $('.qr-code img');
+      qrImg.attr('src', `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${currentQrValue}`);
+      $('.qr-code-wrapper').fadeIn();
+  });
+
+  $('.closeQr').click(function() {
+      $('.qr-code-wrapper').fadeOut();
+  });
+
+  $('.downloadQr').click(function() {
+    const qrImgSrc = $('.qr-code img').attr('src');
+    const a = document.createElement('a');
+    a.href = qrImgSrc; // Set the URL of the QR code image
+    a.download = 'qr-code.png'; // Set the name of the file
+    document.body.appendChild(a); // Append the anchor to the body
+    a.click(); // Trigger the download
+    document.body.removeChild(a); // Remove the anchor from the body
+});
+  // Open QR code in a new tab on image click
+  $('.qr-code img').click(function() {
+      const qrImgSrc = $(this).attr('src');
+      window.open(qrImgSrc, '_blank'); // Open the QR code image in a new tab
+  });
+
+  // Social media share functionality
+  $('.shareFacebook').click(function() {
+      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentQrValue)}`;
+      window.open(shareUrl, '_blank');
+  });
+
+  $('.shareTwitter').click(function() {
+      const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentQrValue)}`;
+      window.open(shareUrl, '_blank');
+  });
+
+  $('.shareWhatsApp').click(function() {
+      const shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(currentQrValue)}`;
+      window.open(shareUrl, '_blank');
+  });

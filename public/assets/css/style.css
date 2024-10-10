@@ -416,4 +416,76 @@ hr {
 .inner .content .container .profile-details p:last-child {
   flex: 5;
   padding-left: 25px;
+}
+
+.qr-code-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qr-code-wrapper .qr-code-content {
+  background: white;
+  border-radius: 7px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.qr-code-wrapper .qr-code-content header h1 {
+  font-size: 21px;
+  font-weight: 500;
+}
+.qr-code-wrapper .qr-code-content header p {
+  margin-top: 5px;
+  color: #575757;
+  font-size: 16px;
+}
+.qr-code-wrapper .qr-code-content .qr-code {
+  margin: 20px 0;
+}
+.qr-code-wrapper .qr-code-content .qr-code img {
+  width: 200px;
+}
+.qr-code-wrapper .qr-code-content button {
+  margin-top: 10px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.qr-code-wrapper .qr-code-content button:hover {
+  background: #2980b9;
+}
+.qr-code-wrapper .qr-code-content button.danger {
+  background: #e74c3c;
+}
+.qr-code-wrapper .qr-code-content button.danger:hover {
+  background: #c0392b;
+}
+.qr-code-wrapper .qr-code-content button i {
+  margin-right: 5px;
+}
+.qr-code-wrapper .qr-code-content .share-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.qr-code-wrapper .qr-code-content .share-buttons button {
+  background: #2c3e50;
+  display: flex;
+  align-items: center;
+}
+.qr-code-wrapper .qr-code-content .share-buttons button:hover {
+  background: #1a252f;
+}
+.qr-code-wrapper .qr-code-content .share-buttons button i {
+  color: white;
 }/*# sourceMappingURL=style.css.map */
