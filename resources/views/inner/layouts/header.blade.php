@@ -22,10 +22,12 @@
             <div class="menu">
                 <li class="@yield('user-add-funds')"><a href="{{url('main/user/funds/add')}}">Add Funds</a></li>
                 <li class="@yield('user-funds-transfer')"><a href="{{url('main/user/funds/transfer')}}">Funds Transfer</a></li>
+                <li class="@yield('user-friends')"><a href="{{url('main/user/friends/all')}}">Friends</a></li>
                 <li class="@yield('user-payment-link')"><a href="{{url('main/user/funds/payment-link')}}">Payment Link</a></li>
                 <li class="@yield('user-transactions')"><a href="{{url('main/user/transactions')}}">Transactions</a></li>
                 <li class="@yield('user-api')"><a href="{{url('main/user/api')}}">API</a></li>
                 <li class="@yield('user-profile')"><a href="{{url('main/user/profile')}}">Profile</a></li>
+                {{-- <li class="@yield('user-refer')"><a href="{{url('main/user/refer')}}">Refer</a></li> --}}
                 <li><a href="{{route('user.logout')}}">Logout</a></li>
                 <li class="balance">Wallet : {{format_number(Auth::user()->wallet_balance)}}</li>
             </div>

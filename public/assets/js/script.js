@@ -139,3 +139,88 @@ function generateId(what, length) {
       const shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(currentQrValue)}`;
       window.open(shareUrl, '_blank');
   });
+
+
+  $(document).ready(function() {
+    $(".copyBtn").click(function() {
+      var referLink = $(".refer-link").text();
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val(referLink).select();
+      document.execCommand("copy");
+      $temp.remove();
+      
+      // Change icon to tick icon for 3 seconds
+      $(this).removeClass("fa-clipboard").addClass("fa-check");
+      setTimeout(function() {
+        $(this).removeClass("fa-check").addClass("fa-clipboard");
+      }, 3000);
+    });
+  });
+
+  $(document).ready(function() {
+    $('[title]').hover(function() {
+        var tooltipText = $(this).attr('title');
+        var tooltip = $('<div class="tooltip visible">' + tooltipText + '</div>');
+        
+        $(this).append(tooltip);
+        $(this).css('position', 'relative');
+        
+        tooltip.css({
+            top: -tooltip.outerHeight() - 10,
+            left: ($(this).outerWidth() - tooltip.outerWidth()) / 2
+        });
+
+        $(this).data('title', tooltipText).removeAttr('title');
+    }, function() {
+        $(this).attr('title', $(this).data('title'));
+        
+        $(this).find('.tooltip').fadeOut(100, function() {
+            $(this).remove();
+        });
+    });
+
+    $('.viewTransactionCard').click(function() {
+        let data = $(this).attr('data-details')
+        data = JSON.parse(data)
+        addInTxnModal(data)
+    })
+
+    function addInTxnModal(data) {
+        $('.txnDate').html(new Date(data.created_at).toLocaleDateString());
+        $('.txnAmount').html(data.amount)
+        $('.txnTxnId').html(data.transaction_id)
+        $('.txnType').html(data.type)
+        $('.txnSource').html(data.from_where)
+        $('.txnClosing').html(data.closing_balance)
+        $('.modal-bg').addClass('active')
+    }
+    $('#close-modal').click(() => {
+        closeModal()
+    })
+
+    function closeModal() {
+        $('.txnDate').html("");
+        $('.txnAmount').html("")
+        $('.txnTxnId').html("")
+        $('.txnType').html("")
+        $('.txnSource').html("")
+        $('.txnClosing').html("")
+        $('.modal-bg').removeClass('active')
+    }
+});
+
+
+
+document.getElementById('download-receipt').addEventListener('click', function () {
+    const modalCard = document.querySelector('.modal-card');
+    
+    // Use html2canvas to capture the modal content
+    html2canvas(modalCard).then(canvas => {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'transaction_receipt.png';
+        link.click();
+    });
+});
+

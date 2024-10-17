@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\FriendsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,16 +62,23 @@ Route::group(['prefix'=> 'main', 'middleware' => 'login.auth'], function() {
         });
         Route::get('/', [InnerController::class, 'userIndex']);
         Route::get('/profile', [InnerController::class, 'profile']);
+        // Route::get('/refer', [InnerController::class, 'refer']);
         Route::get('/create-account', [InnerController::class, 'createAccount']);
         Route::group(['prefix'=> 'funds'], function() {
             Route::get('/add', [InnerController::class, 'addFunds']);
-            Route::get('/transfer', [InnerController::class, 'fundsTransfer']);
+            Route::get('/transfer/{account_number?}', [InnerController::class, 'fundsTransfer']);
             Route::get('/payment-link', [InnerController::class, 'paymentLink']);
             Route::get('/all-payment-links', [InnerController::class, 'allPaymentLinks']);
             Route::get('/pay-via-link/{link}', [DepositController::class, 'payViaLink']);
             Route::post('/add', [DepositController::class, 'addFunds'])->name('funds.add');
             Route::post('/transfer', [DepositController::class, 'fundsTransfer'])->name('funds.transfer');
             Route::post('/payment-link', [DepositController::class, 'generatePaymentLink'])->name('funds.paymentLinkGenerate');
+        });
+        Route::group(['prefix'=> 'friends'], function() {
+            Route::get('/all', [FriendsController::class, 'allFriends']);
+            Route::get('/add', [FriendsController::class, 'addFriend']);
+            Route::get('/change-status/{id}', [FriendsController::class, 'changeStatus']);
+            Route::post('/add', [FriendsController::class, 'saveFriend'])->name('friend.add');
         });
         Route::group(['prefix'=> 'transactions'], function() {
             Route::get('/', [TransactionController::class, 'allTransactions']);

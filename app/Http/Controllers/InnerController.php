@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 class InnerController extends Controller
 {
     public function adminIndex() {
-        $users = User::where('role', 2)->get();
-        $activeUsers = User::where('status', 1)->where('role', 2)->get();
+        $users = User::where('role', 1)->get();
+        $activeUsers = User::where('status', 1)->where('role', 1)->get();
         $transactionsCount = Transaction::distinct('transaction_id')->count();
         $transactionsSum = Transaction::groupBy('transaction_id')
                                       ->selectRaw('transaction_id, MAX(amount) as max_amount')
@@ -45,8 +45,8 @@ class InnerController extends Controller
     public function addFunds() {
         return view('inner.user-addFunds');
     }
-    public function fundsTransfer() {
-        return view('inner.user-fundsTransfer');
+    public function fundsTransfer($account_number = "") {
+        return view('inner.user-fundsTransfer', compact('account_number'));
     }
     public function profile() {
         $wallet_account = WalletAccount::where('user_id', Auth::id())->first();
@@ -114,5 +114,11 @@ class InnerController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
         return view('inner.user-allPaymentLinks', compact('links', 'forMeLinks'));
+    }
+
+
+    public function refer() {
+        $user = Auth::user();
+        return view('inner.user-Refer', compact('user'));
     }
 }

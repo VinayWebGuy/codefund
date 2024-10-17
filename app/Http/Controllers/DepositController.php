@@ -86,6 +86,7 @@ class DepositController extends Controller
         // Validate Acccount Number
         $account = WalletAccount::where('account_number', $req->account_number)->first();
         $myAccount = WalletAccount::where('user_id', Auth::id())->first();
+     
         if($req->account_number  == $myAccount->account_number) {
             return redirect()->back()->with('error', "You can't send balance to your own account.")->withInput();
         }
@@ -175,14 +176,18 @@ class DepositController extends Controller
         if($link->generatedBy == Auth::id()) {
             return redirect('main/user/transactions')->with('error', "You can't send balance to your own account.");
         }
-        if($user->wallet_balance < $link->amount) {
-            return redirect()->back()->with('error', "You don't have enough balance to perform this transaction.")->withInput();
-        }
         // Validate Acccount Number
         $account = WalletAccount::where('user_id', $link->generatedBy)->first();
         $myAccount = WalletAccount::where('user_id', Auth::id())->first();
+        
         if(!$account) {
             return redirect()->back()->with('error', "Please enter a valid account number.");
+        }
+        if($link->account_number != $myAccount->account_number) {
+            return redirect()->back()->with('error', "This link is not valid or has been expired");
+        }
+        if($user->wallet_balance < $link->amount) {
+            return redirect()->back()->with('error', "You don't have enough balance to perform this transaction.")->withInput();
         }
      
         if($account->status == 0) {

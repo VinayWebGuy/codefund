@@ -33,6 +33,7 @@ class ApiController extends Controller
     }
     public function generateApi(Request $req) {
         $req->validate([
+            'name' => 'required',
             'api_quota' => 'required',
             'extra_secure' => 'required|in:0,1',
             'total_requests' => 'required_if:api_quota,limited|numeric|max:25000',
@@ -44,6 +45,7 @@ class ApiController extends Controller
         $api = Api::create([
            'user_id' => Auth::id(),
            'key' => $key,// 
+           'name' => $req->name,
            'api_quota' => $req->api_quota,
            'total_requests' => $req->total_requests,
            'extra_secure' => $req->extra_secure,
@@ -75,12 +77,14 @@ class ApiController extends Controller
     }
     public function updateApi(Request $req) {
         $req->validate([
+            'name' => 'required',
             'api_quota' => 'required',
             'extra_secure' => 'required|in:0,1',
             'total_requests' => 'required_if:api_quota,limited|numeric|max:20000',
             'security_header' => 'required_if:extra_secure,1|alpha_num',
         ]);
         $api = Api::where('key', $req->key)->where('user_id', Auth::id())->update([
+           'name' => $req->name,
            'api_quota' => $req->api_quota,
            'total_requests' => $req->total_requests,
            'extra_secure' => $req->extra_secure,
@@ -148,7 +152,7 @@ class ApiController extends Controller
             return response()->json(['success' => false, 'code' => 401, 'message' => 'User  not found!']);
         }
         if ($user->auth_key != $auth_key) {
-            return response()->json(['success' => false, 'code' => 403, 'message' => 'Invalid API or User is not authenticated!']);
+            return response()->json(['success' => false, 'code' => 403, 'message' => 'User is not authenticated!']);
         }
 
       

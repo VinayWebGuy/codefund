@@ -11,6 +11,7 @@ class Api extends Model
 
     protected $fillable = [
         'user_id',
+        'name',
         'key',
         'api_quota',
         'total_requests',

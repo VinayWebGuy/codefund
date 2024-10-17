@@ -11,6 +11,20 @@
             <input type="hidden" name="key" value="{{$api->key}}">
             <div class="row form">
                 <div class="group">
+                    <label for="name">Name</label>
+                   <input type="text" name="name" id="name" value="{{$api->name}}">
+                   @error('name')
+                   <div class="error">{{ $message }}</div>
+               @enderror
+                </div>
+                 <div class="group">
+                    <label for="total_requests">Total Requests</label>
+                   <input type="number" name="total_requests" id="total_requests" value="{{$api->total_requests}}" {{$api->api_quota == 'unlimited' ? "disabled": ""}} min="1" max="25000">
+                   @error('total_requests')
+                   <div class="error">{{ $message }}</div>
+               @enderror
+                </div>
+                <div class="group">
                     <label for="api_quota">API Quota</label>
                     <select name="api_quota" id="api_quota">
                         <option {{ $api->api_quota === 'limited' ? 'selected' : '' }} value="limited">Limited</option>
@@ -20,13 +34,7 @@
                     <div class="error">{{ $message }}</div>
                 @enderror
                 </div>
-                <div class="group">
-                    <label for="total_requests">Total Requests</label>
-                   <input type="number" name="total_requests" id="total_requests" value="{{$api->total_requests}}" {{$api->api_quota == 'unlimited' ? "disabled": ""}} min="1" max="25000">
-                   @error('total_requests')
-                   <div class="error">{{ $message }}</div>
-               @enderror
-                </div>
+              
             </div>
             <div class="row form">
                 <div class="group">

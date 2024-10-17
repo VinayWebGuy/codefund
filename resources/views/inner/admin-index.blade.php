@@ -3,11 +3,11 @@
 @section('content')
     <div class="blocks">
         <div class="block">
-            <span>{{ format_number(count($users)) }}</span>
+            <span>{{ count($users) }}</span>
             <span>Total Users</span>
         </div>
         <div class="block">
-            <span>{{ format_number(count($activeUsers)) }}</span>
+            <span>{{ count($activeUsers) }}</span>
             <span>Active Users</span>
         </div>
         <div class="block">

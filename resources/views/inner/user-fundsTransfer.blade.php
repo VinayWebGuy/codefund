@@ -17,7 +17,7 @@
                 </div>
                 <div class="group">
                     <label for="account_number">Account number</label>
-                    <input type="text"  name="account_number" id="account_number" value="{{old('account_number')}}">
+                    <input type="text"  name="account_number" id="account_number" value="{{old('account_number', $account_number)}}">
                     @error('account_number')
                     <div class="error">{{$message}}</div>
                 @enderror

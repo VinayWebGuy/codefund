@@ -12,6 +12,7 @@
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>Name</th>
                     <th>API Key</th>
                     <th>Total / Left Requests</th>
                     <th>Security Header</th>
@@ -25,27 +26,28 @@
                 @foreach ($keys as $key)
                 <tr>
                     <td>{{$i}}</td>
-                    <td class="{{$key->total_requests - $key->request_hit == 0 ? 'danger': ''}}">{{$key->key}}</td>
-                    <td>{{$key->api_quota == 'unlimited' ? "Unlimited" : $key->total_requests}} / {{$key->api_quota == 'unlimited' ? "Unlimited" : $key->total_requests - $key->request_hit}}</td>
-                    <td class="blur">{{$key->security_header}}</td>
+                    <td>{{$key->name}}</td>
+                    <td class="{{($key->total_requests - $key->request_hit == 0 && $key->api_quota != 'unlimited') ? 'danger': ''}}">{{$key->key}}</td>
+                    <td><span title="Total">{{$key->api_quota == 'unlimited' ? "Unlimited" : $key->total_requests}}</span> / <span title="Remaining">{{$key->api_quota == 'unlimited' ? "Unlimited" : $key->total_requests - $key->request_hit}}</span></td>
+                    <td class="blur" title="Shh.....">{{$key->security_header}}</td>
                     <td>
           
-                        <a href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->check_balance == 0 ? 'restrict' : ''}} perm">CB</a>
-                        <a href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->get_transactions == 0 ? 'restrict' : ''}} perm">GT</a>
-                        <a href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->find_user == 0 ? 'restrict' : ''}} perm">FU</a>
-                        <a href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->send_funds == 0 ? 'restrict' : ''}} perm">SF</a>
-                        <a href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->my_profile == 0 ? 'restrict' : ''}} perm">MP</a>
-                        <a href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->find_transaction == 0 ? 'restrict' : ''}} perm">FT</a>
-                        <a href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->generate_payment_link == 0 ? 'restrict' : ''}} perm">GPL</a>
+                        <a title="Check Balance" href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->check_balance == 0 ? 'restrict' : ''}} perm">CB</a>
+                        <a title="Get Transactions" href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->get_transactions == 0 ? 'restrict' : ''}} perm">GT</a>
+                        <a title="Find User" href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->find_user == 0 ? 'restrict' : ''}} perm">FU</a>
+                        <a title="Send Funds" href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->send_funds == 0 ? 'restrict' : ''}} perm">SF</a>
+                        <a title="My Profile" href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->my_profile == 0 ? 'restrict' : ''}} perm">MP</a>
+                        <a title="Find Transaction" href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->find_transaction == 0 ? 'restrict' : ''}} perm">FT</a>
+                        <a title="Generate Payment Link" href="{{url('main/user/api/permission')}}/{{$key->key}}" class="{{$key->generate_payment_link == 0 ? 'restrict' : ''}} perm">GPL</a>
                     </td>
                     <td>
                         {{-- <a class="btn primary sm" href="{{url('main/user/api/permission')}}/{{$key->key}}">Permissions</a> --}}
-                        <a href="{{url('main/user/api/delete')}}/{{$key->key}}" class="btn danger sm">Delete</a>
-                        <a href="{{url('main/user/api/edit')}}/{{$key->key}}" class="btn warning sm">Edit</a>
+                        <a title="Delete" href="{{url('main/user/api/delete')}}/{{$key->key}}" class="btn danger sm"><i class="fa fa-trash"></i></a>
+                        <a title="Edit" href="{{url('main/user/api/edit')}}/{{$key->key}}" class="btn warning sm"><i class="fa fa-edit"></i></a>
                         @if($key->status == 1)
-                        <a href="{{url('main/user/api/change-status')}}/{{$key->key}}" class="btn primary sm">Active</a>
+                        <a title="Active" href="{{url('main/user/api/change-status')}}/{{$key->key}}" class="btn primary sm"><i class="fa fa-thumbs-up"></i></a>
                         @else
-                        <a href="{{url('main/user/api/change-status')}}/{{$key->key}}" class="btn danger sm">Inactive</a>
+                        <a title="Deactive" href="{{url('main/user/api/change-status')}}/{{$key->key}}" class="btn danger sm"><i class="fa fa-thumbs-down"></i></a>
                         @endif
                     </td>
                 </tr>   
@@ -64,6 +66,13 @@
         <form action="{{route('generate.key')}}" method="post">
             @csrf
             <div class="row form">
+                <div class="group">
+                    <label for="name">Name</label>
+                   <input type="text" name="name" id="name" value="{{old('name')}}">
+                   @error('name')
+                   <div class="error">{{ $message }}</div>
+               @enderror
+                </div>
                 <div class="group">
                     <label for="api_quota">API Quota</label>
                     <select name="api_quota" id="api_quota">

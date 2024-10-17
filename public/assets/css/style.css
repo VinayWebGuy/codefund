@@ -76,6 +76,7 @@ a.link {
 input,
 select {
   font-family: inherit;
+  background-color: transparent;
 }
 
 .credits,
@@ -417,6 +418,25 @@ hr {
   flex: 5;
   padding-left: 25px;
 }
+.inner .content .refer-box {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #000;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+.inner .content .refer-box i {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.inner .content .refer-box:hover i {
+  opacity: 1;
+}
+.inner .content .referNote {
+  margin-top: 7px;
+  font-weight: 600;
+}
 
 .qr-code-wrapper {
   position: fixed;
@@ -488,4 +508,92 @@ hr {
 }
 .qr-code-wrapper .qr-code-content .share-buttons button i {
   color: white;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.tooltip.visible {
+  opacity: 1;
+}
+.tooltip::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #333 transparent transparent transparent;
+}
+
+.modal-bg {
+  position: fixed;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.5647058824);
+  inset: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.modal-bg .modal-card {
+  width: 400px;
+  min-height: 200px;
+  background-color: #fff;
+  padding: 10px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+}
+.modal-bg .modal-card #close-modal {
+  position: absolute;
+  right: 8px;
+  top: 12px;
+  color: #f00;
+  cursor: pointer;
+}
+.modal-bg .modal-card #download-receipt {
+  position: absolute;
+  left: 8px;
+  top: 12px;
+  color: #087cb6;
+  cursor: pointer;
+}
+.modal-bg .modal-card .txn-details .type {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+.modal-bg .modal-card .txn-details .txn-info {
+  padding: 7px;
+  display: flex;
+  justify-content: space-between;
+}
+.modal-bg .modal-card .txn-details .txn-info span {
+  flex: 1;
+}
+.modal-bg .modal-card .txn-details .txn-info span:last-child {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: 600;
+}
+.modal-bg.active {
+  display: flex;
 }/*# sourceMappingURL=style.css.map */
